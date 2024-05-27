@@ -5,23 +5,24 @@
   const sections = Array.from(document.querySelectorAll("section:not(.intro)"));
   sections.forEach((element) => {
     const navLink = document.createElement("a");
-    navLink.classList.add("nav-link");
-    navLink.id = `${element.id}.nav-link`;
+    navLink.id = `${element.id}.nav`;
     navLink.href = `#${element.id}`;
     navLink.textContent = element.querySelector("header").textContent;
-    document.querySelector(".nav-bar").appendChild(navLink);
+    document.querySelector("nav").appendChild(navLink);
   });
 
-  // Making a helper func to get the corresponding nav-link el of a section
+  // Making a helper func to get the corresponding nav el of a section
   const getSectionNavLink = (section) => {
-    return document.getElementById(`${section.id}.nav-link`);
+    return document.getElementById(`${section.id}.nav`);
   };
-
+  // The function that updates the nav bar based on the currently viewed section.
+  // It first removes all current classes from the nav bar elements
+  // Then finds the nearest section to the top of the page and sets it as the current section
   const updateNavBar = () => {
     // Resetting the current section
     if (navBarData.currentSection) {
       const elNav = getSectionNavLink(navBarData.currentSection);
-      elNav.classList.remove("nav-link-current");
+      elNav.classList.remove("current");
       navBarData.currentSection = null;
     }
     // Setting vals
@@ -40,10 +41,10 @@
         }
       }
     });
-    // Setting the current section's nav-link to be highlighted as current
+    // Setting the current section's nav to be highlighted as current
     if (navBarData.currentSection) {
       const elNav = getSectionNavLink(navBarData.currentSection);
-      elNav.classList.add("nav-link-current");
+      elNav.classList.add("current");
     }
   };
 
