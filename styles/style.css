@@ -83,10 +83,11 @@ table tr {
   transition: all 1s var(--transition-timing);
 }
 
-table th,
-table td {
+table tr th,
+table tr td {
   padding: 1rem;
   text-align: center;
+  min-width: 10rem;
 }
 
 table tr:has(th) {
@@ -107,9 +108,12 @@ tr td:last-child {
   border-bottom-right-radius: 10px;
 }
 
+ul li {
+  margin: 0.5rem 0 0.5rem 0;
+}
+
 section {
   width: 100%;
-  /* height: 100vh; */
   padding: 30vh 0 5rem 0;
 
   display: flex;
@@ -121,7 +125,8 @@ section {
 p {
   max-width: 55%;
   font-size: 1.2rem;
-  text-align: justify;
+  text-align: center;
+  line-height: 1.5rem; /* Add this line */
 }
 
 span.highlight {
@@ -180,16 +185,35 @@ nav > a.current {
   background-color: var(--quaternary-bg-color);
 }
 
+img {
+  object-fit: cover;
+}
+
+img.headshot {
+  min-width: 20%;
+  height: 50vh;
+  border-radius: 1rem;
+  border: var(--secondary-bg-color) solid 1px;
+  filter: grayscale(80%);
+  transition: all 0.5s 0s var(--transition-timing);
+}
+img.headshot:hover {
+  filter: grayscale(50%);
+  border: var(--quinary-bg-color) solid 1px;
+}
+
 .column-container {
   display: flex;
-  grid-auto-flow: column;
   justify-content: space-around;
   align-items: center;
+  margin: 0rem 10rem 0rem 10rem;
+}
+.column-container > * {
+  width: 35%;
 }
 
 .panels {
   width: 100%;
-  margin: 5rem 0 5rem 0;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -199,12 +223,11 @@ nav > a.current {
 .panels.rows {
   flex-direction: column;
 }
-.panels.column {
+.panels.columns {
   flex-direction: row;
 }
 
 .panel {
-  border-radius: 1rem;
   overflow: hidden;
   display: flex;
   flex-direction: column-reverse;
@@ -214,7 +237,7 @@ nav > a.current {
   background-color: var(--secondary-bg-color);
   transition: all 0.5s 0s var(--transition-timing);
 }
-.panel > * {
+.panel * {
   transition: inherit;
 }
 .panels.rows .panel {
@@ -225,11 +248,11 @@ nav > a.current {
   flex-direction: column;
   justify-content: bottom;
 }
-.panels.column .panel {
+.panels.columns .panel {
   min-width: 20%;
   height: 30vw;
 }
-.panel.hoverable:hover {
+.panel:hover {
   background-color: var(--senary-bg-color);
   border: var(--quinary-bg-color) solid 1px;
 }
@@ -246,26 +269,26 @@ nav > a.current {
 }
 .panel h4 {
   color: var(--secondary-txt-color);
+  font-weight: 700;
   margin: 0 0 0 0;
 }
 .panel h5 {
   font-size: 1rem;
   font-weight: 300;
   font-style: italic;
-  margin: 0 0 0.4rem 4rem;
+  margin: 0 0 0.5rem 1rem;
 }
 .panel p {
   max-width: 100%;
   font-size: 1rem;
-  font-weight: 200;
-  margin: 0 6rem 1rem 2rem;
+  text-align: justify;
+  margin: 0 8rem 1rem 2rem;
 }
 
 .panel img {
   position: absolute;
   width: 100%;
   height: 100%;
-  object-fit: cover;
   filter: grayscale(80%);
 }
 .panel:hover img {
@@ -275,10 +298,8 @@ nav > a.current {
 
 .panel .reveal {
   position: relative;
-  margin: 0 0 0 0;
-  font-size: 16px;
   padding: 1rem 0rem 1rem 0rem;
-  background-color: #5497fa60;
+  background-color: #5496fae2;
   text-align: center;
   transform: translateY(100%);
 }
@@ -291,7 +312,6 @@ nav > a.current {
   font-size: 4rem;
   display: flex;
   flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
   gap: 1.5rem;
 }

@@ -1,55 +1,68 @@
 {
   // Animations
-  const kpFadein = [
+  const kpFi = [
     { opacity: 0 },
     { color: "#5497fa", offset: 0.9 },
     { opacity: 1, color: "#c7c7c7" },
   ];
-  const kpFadeinLeft = [
+  const kpFiLeft = [
     { opacity: 0, translate: "-5rem 0rem" },
     { opacity: 1, translate: "0rem 0rem" },
   ];
-  const kpFadeout = [{ opacity: 0 }];
+  const kpFo = [{ opacity: 0 }];
   // Animation options
-  const kpInOptions = {
+  const kpFiOptions = {
     duration: 1000,
     delay: 0,
     fill: "forwards",
     easing: "cubic-bezier(0.215, 0.610, 0.01, 1.000)",
   };
-  const kpOutOptions = { duration: 0, fill: "forwards" };
+  const kpFoOptions = { duration: 0, fill: "forwards" };
 
   // Animation functions
-  function animateFadeinEl(el) {
-    animateFadeout(el);
+  function animateFiEl(el) {
+    // Reset the element's animation
+    animateFo(el);
     // Animate the element in left
-    el.animate(kpFadeinLeft, kpInOptions);
+    el.animate(kpFiLeft, kpFiOptions);
   }
-  function animateFadeinChildren(el) {
-    animateFadeout(el);
+  function animateFiElSoft(el) {
+    // Reset the element's animation
+    animateFo(el);
+    // Animate the element in left
+    el.animate(kpFi, {
+      ...kpFiOptions,
+      delay: 500,
+      easing: "cubic-bezier(0.820, 0.085, 0.680, 0.600)", // Make the easing slower at the very end
+    });
+  }
+  function animateFiChildren(el) {
+    // Reset the element's animation
+    animateFo(el);
     // If there are children, animate the element stationary
-    el.animate(kpFadein, kpInOptions);
+    el.animate(kpFi, kpFoOptions);
     // Then animate thethe children in left
     el.querySelectorAll(":scope > *").forEach((child, i) => {
-      animateFadeout(child);
+      // Reset the child's animation
+      animateFo(child);
       // Animate the children in left
-      child.animate(kpFadeinLeft, {
-        ...kpInOptions,
+      child.animate(kpFiLeft, {
+        ...kpFiOptions,
         delay: i * 100,
       });
     });
   }
-  function animateFadeinTable(el) {
-    animateFadeout(el);
+  function animateFiTable(el) {
+    animateFo(el);
     // If there are children, animate the element stationary
-    el.animate(kpFadein, kpInOptions);
+    el.animate(kpFi, kpFiOptions);
     // Animate the headers in first
     const thLs = el.querySelectorAll("th");
     thLs.forEach((child, i) => {
-      animateFadeout(child);
+      animateFo(child);
       // Animate the children in left
-      child.animate(kpFadein, {
-        ...kpInOptions,
+      child.animate(kpFi, {
+        ...kpFiOptions,
         delay: i * 100,
       });
     });
@@ -57,22 +70,23 @@
     let tdLs = Array.from(el.querySelectorAll("td"));
     tdLs = tdLs.sort(() => Math.random() - 0.5);
     tdLs.forEach((child, i) => {
-      animateFadeout(child);
+      animateFo(child);
       // Animate the children in left
-      child.animate(kpFadein, {
-        ...kpInOptions,
+      child.animate(kpFi, {
+        ...kpFiOptions,
         delay: (i + thLs.length) * 100,
       });
     });
   }
-  function animateFadeout(el) {
+  function animateFo(el) {
     // Make both the element disappear
-    el.animate(kpFadeout, kpOutOptions);
+    el.animate(kpFo, kpFoOptions);
   }
 
   // Observer Factory
-  function observerFactory(animateInFunc) {
-    return new IntersectionObserver(
+  function observerFactory(animateInFunc, el_ls) {
+    // Make a new observer
+    const intObs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry, i) => {
           if (entry.intersectionRatio > 0.3) {
@@ -80,25 +94,32 @@
             animateInFunc(entry.target);
           } else if (entry.intersectionRatio == 0) {
             // Is going OUT of view
-            animateFadeout(entry.target);
+            animateFo(entry.target);
           }
         });
       },
       { threshold: [0, 0.3] }
     );
+    // Observing the given elements
+    el_ls.forEach((el) => intObs.observe(el));
+    // Return the observer
+    return intObs;
   }
-  // Observers
-  const obsFadinEl = observerFactory(animateFadeinEl);
-  const obsFadinChildren = observerFactory(animateFadeinChildren);
-  const obsFadinTable = observerFactory(animateFadeinTable);
-  // Observing
-  document
-    .querySelectorAll(".fadein-el")
-    .forEach((el) => obsFadinEl.observe(el));
-  document
-    .querySelectorAll(".fadein-children")
-    .forEach((el) => obsFadinChildren.observe(el));
-  document
-    .querySelectorAll(".fadein-table")
-    .forEach((el) => obsFadinTable.observe(el));
+  // Making Observers
+  const obsFadinEl = observerFactory(
+    animateFiEl,
+    document.querySelectorAll(".fi-el")
+  );
+  const obsFadinElSoft = observerFactory(
+    animateFiElSoft,
+    document.querySelectorAll(".fi-el-soft")
+  );
+  const obsFadinChildren = observerFactory(
+    animateFiChildren,
+    document.querySelectorAll(".fi-children")
+  );
+  const obsFadinTable = observerFactory(
+    animateFiTable,
+    document.querySelectorAll(".fi-table")
+  );
 }
