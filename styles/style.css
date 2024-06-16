@@ -148,8 +148,7 @@ img {
   padding: 0.7rem;
   border-radius: 1rem;
   background-color: transparent;
-  margin-top: 5vh;
-  top: 2vh;
+  top: 3rem;
   z-index: calc(var(--z-forward) + 1);
 }
 
@@ -331,7 +330,7 @@ img.headshot:hover {
   transform: translateY(-1rem);
 }
 
-@media (max-width: 60em) {
+@media (max-width: 80em) {
   :root {
     font-size: 24px;
   }

@@ -5,7 +5,7 @@
   const iconData = { pageIsTop: true };
 
   const animatePageTop_1 = [
-    { translate: "-40vw -5vh" },
+    { translate: "-40vw -2rem" },
     { translate: "0vw 0vh" },
   ];
   const animatePageTop_2 = [
