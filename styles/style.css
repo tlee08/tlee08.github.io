@@ -6,7 +6,8 @@
   --quinary-bg-color: #5497fa;
   --senary-bg-color: #2a2a2a;
 
-  --nav-bg-color: rgba(44, 44, 44, 0.2);
+  /* can also set opacity to 0.2 and blur(0.5rem) in nav */
+  --nav-bg-color: rgba(44, 44, 44, 1);
 
   --primary-txt-color: #c7c7c7;
   --secondary-txt-color: #5497fa;
@@ -40,7 +41,7 @@ body {
   margin: 0;
   border-width: 0;
   padding: 0;
-  background-color: var(--primary-bg-color);
+  background-color: var(--secondary-bg-color);
   color: var(--primary-txt-color);
 
   display: flex;
@@ -114,6 +115,7 @@ ul li {
 section {
   width: 100%;
   padding: 30vh 0 5rem 0;
+  background-color: var(--primary-bg-color);
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -163,7 +165,7 @@ nav {
   height: 3rem;
   background-color: var(--nav-bg-color);
   border-radius: 1rem;
-  backdrop-filter: blur(0.5rem);
+  /* backdrop-filter: blur(0.5rem); */
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -221,6 +223,7 @@ img.headshot:hover {
 }
 .panels.columns {
   flex-direction: row;
+  width: 80%;
 }
 
 .panel {
@@ -245,8 +248,8 @@ img.headshot:hover {
   justify-content: bottom;
 }
 .panels.columns .panel {
-  width: 30%;
-  height: 30rem;
+  min-width: 25rem;
+  height: 20rem;
 }
 .panel:hover {
   background-color: var(--senary-bg-color);
@@ -333,46 +336,5 @@ img.headshot:hover {
 @media (max-width: 80em) {
   :root {
     font-size: 24px;
-  }
-
-  table tr {
-    border-bottom: var(--quinary-bg-color) solid 1px;
-  }
-  table th {
-    display: none;
-  }
-  table td {
-    display: flex;
-  }
-
-  nav {
-    width: 100%;
-    border-radius: 0;
-  }
-
-  .panel .panel-header {
-    flex-direction: column;
-  }
-
-  .panel h3 {
-    font-size: 1rem;
-  }
-  .panel h4 {
-    font-size: 0.8rem;
-  }
-  .panel h5 {
-    font-size: 0.7rem;
-  }
-  .panel p {
-    font-size: 0.7rem;
-    line-height: 1rem;
-    margin: 0 1rem 1rem 2rem;
-  }
-  .panels.columns .panel {
-    height: 20rem;
-  }
-
-  .column-container {
-    margin: 0rem 2rem 0rem 2rem;
   }
 }

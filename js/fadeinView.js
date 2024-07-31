@@ -1,5 +1,6 @@
 {
   // Animations
+  const delayVal = 100;
   const kpFi = [
     { opacity: 0 },
     { color: "#5497fa", offset: 0.9 },
@@ -39,16 +40,16 @@
   function animateFiChildren(el) {
     // Reset the element's animation
     animateFo(el);
-    // If there are children, animate the element stationary
+    // Animate the element stationary
     el.animate(kpFi, kpFoOptions);
-    // Then animate thethe children in left
+    // Then animate the children in left
     el.querySelectorAll(":scope > *").forEach((child, i) => {
       // Reset the child's animation
       animateFo(child);
       // Animate the children in left
       child.animate(kpFiLeft, {
         ...kpFiOptions,
-        delay: i * 100,
+        delay: i * delayVal,
       });
     });
   }
@@ -59,22 +60,24 @@
     // Animate the headers in first
     const thLs = el.querySelectorAll("th");
     thLs.forEach((child, i) => {
+      // Reset the child's animation
       animateFo(child);
       // Animate the children in left
       child.animate(kpFi, {
         ...kpFiOptions,
-        delay: i * 100,
+        delay: i * delayVal,
       });
     });
     // Then animate the cells in random order
     let tdLs = Array.from(el.querySelectorAll("td"));
     tdLs = tdLs.sort(() => Math.random() - 0.5);
     tdLs.forEach((child, i) => {
+      // Reset the child's animation
       animateFo(child);
       // Animate the children in left
       child.animate(kpFi, {
         ...kpFiOptions,
-        delay: (i + thLs.length) * 100,
+        delay: (i + thLs.length) * delayVal,
       });
     });
   }
@@ -90,14 +93,15 @@
       (entries) => {
         entries.forEach((entry, i) => {
           if (entry.intersectionRatio > 0.3) {
-            // Is coming INTO view
+            // If coming INTO view
             animateInFunc(entry.target);
           } else if (entry.intersectionRatio == 0) {
-            // Is going OUT of view
+            // If going OUT of view
             animateFo(entry.target);
           }
         });
       },
+      // Thresholds for the observer are 0 (for exit) and 0.3 (for entry)
       { threshold: [0, 0.3] }
     );
     // Observing the given elements
@@ -105,6 +109,7 @@
     // Return the observer
     return intObs;
   }
+
   // Making Observers
   const obsFadinEl = observerFactory(
     animateFiEl,
