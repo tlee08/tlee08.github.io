@@ -41,7 +41,7 @@ body {
   margin: 0;
   border-width: 0;
   padding: 0;
-  background-color: var(--secondary-bg-color);
+  background-color: var(--primary-bg-color);
   color: var(--primary-txt-color);
 
   display: flex;
@@ -115,7 +115,7 @@ ul li {
 section {
   width: 100%;
   padding: 30vh 0 5rem 0;
-  background-color: var(--primary-bg-color);
+  /* background-color: var(--primary-bg-color); */
   display: flex;
   flex-direction: column;
   justify-content: start;
